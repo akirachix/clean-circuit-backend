@@ -16,11 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.urls import path, include
+from upcycler.views import simple_view
 
 urlpatterns = [
-    path('renewit/', include('renewit.urls')),
- 
+    path('', simple_view, name='simple_view'),
 ]
 
 urlpatterns = [
