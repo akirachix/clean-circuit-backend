@@ -38,9 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'trader'
+
+
     'upcycler',
 
     'payment',
+
 
 ]
 
