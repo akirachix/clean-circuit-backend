@@ -11,7 +11,6 @@ class Trader(models.Model):
     def __str__(self):
         return self.name 
         
-
 class Material(models.Model):
     material = models.AutoField(primary_key=True)
     trader = models.ForeignKey(Trader, on_delete=models.CASCADE) 
