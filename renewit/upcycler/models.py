@@ -19,6 +19,7 @@ class UpcyclerClothesRequest(models.Model):
     upcycler = models.ForeignKey(Upcycler, on_delete=models.CASCADE) 
     type = models.CharField(max_length=50) 
     quantity = models.IntegerField()  
+    image = models.ImageField(upload_to='upcycler_images/', null=True, blank=True)
     requested_at = models.DateTimeField(auto_now_add=True)  
 
     def __str__(self):
@@ -31,6 +32,7 @@ class UpcycledProduct(models.Model):
     quantity = models.IntegerField() 
     type = models.CharField(max_length=50) 
     price = models.DecimalField(max_digits=10, decimal_places=2) 
+    image = models.ImageField(upload_to='upcycler_images/', null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):

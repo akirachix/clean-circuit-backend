@@ -17,6 +17,7 @@ class Material(models.Model):
     type = models.CharField(max_length=50)
     quantity = models.IntegerField()
     condition = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='trader_images/', null=True, blank=True)
     listed_at = models.DateTimeField()
 
     def __str__(self):
