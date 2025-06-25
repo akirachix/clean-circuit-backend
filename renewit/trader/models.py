@@ -17,6 +17,7 @@ class Material(models.Model):
     trader = models.ForeignKey(Trader, on_delete=models.CASCADE) 
     type = models.CharField(max_length=50)
     quantity = models.IntegerField()
+    image = models.ImageField(upload_to='material_images/', null=True, blank=True)
     condition = models.CharField(max_length=50)
     listed_at = models.DateTimeField()
 

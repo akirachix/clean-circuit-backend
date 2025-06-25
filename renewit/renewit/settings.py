@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'trader',
     'upcycler',
     'payment',
+    'api',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
