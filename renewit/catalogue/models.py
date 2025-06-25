@@ -9,7 +9,6 @@ class MaterialCatalogue(models.Model):
         ('wood', 'Wood'),
         ('other', 'Other'),
     ]
-
     material_type = models.CharField(max_length=50, choices=MATERIAL_TYPES)  
     price_per_kg = models.DecimalField(max_digits=10, decimal_places=2)  
     last_update_date = models.DateField(auto_now=True) 
