@@ -10,11 +10,8 @@ class Trader(models.Model):
 
     def __str__(self):
         return self.name 
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> f130055c696e521b27a9956986c9c00272ca1d0b
+
 class Material(models.Model):
     material = models.AutoField(primary_key=True)
     trader = models.ForeignKey(Trader, on_delete=models.CASCADE) 
