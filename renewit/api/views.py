@@ -1,13 +1,13 @@
-from upcycler.models import Upcycler, UpcyclerClothesRequest
+from user_role.models import User, UpcyclerClothesRequest
 from rest_framework import viewsets
 from .serializers import (
-    UpcyclerSerializer, UpcyclerClothesRequestSerializer
+     UserSerializer, UpcyclerClothesRequestSerializer
     
 )
 
-class UpcyclerViewSet(viewsets.ModelViewSet):
-    queryset = Upcycler.objects.all()
-    serializer_class = UpcyclerSerializer
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 class UpcyclerClothesRequestViewSet(viewsets.ModelViewSet):
     queryset = UpcyclerClothesRequest.objects.all()

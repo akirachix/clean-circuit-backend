@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class UpcyclerConfig(AppConfig):
+class UserRoleConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'upcycler'
+    name = 'user_role'

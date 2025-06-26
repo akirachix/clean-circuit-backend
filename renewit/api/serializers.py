@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from upcycler.models import Upcycler, UpcyclerClothesRequest
+from user_role.models import User, UpcyclerClothesRequest
 
 
-class UpcyclerSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Upcycler
+        model = User
         fields = '__all__'
 
 class UpcyclerClothesRequestSerializer(serializers.ModelSerializer):
