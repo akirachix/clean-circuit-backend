@@ -22,7 +22,7 @@ class MaterialCatalogue(models.Model):
         'linel':1500.00,    
         'satin':1500.00,    
         'silk':1500.00,
-        'wool':900,
+        'wool':900.00,
     }
 
     material_type = models.CharField(max_length=50, choices=MATERIAL_TYPES)  
