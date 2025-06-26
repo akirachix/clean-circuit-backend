@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 class PaymentDetails(models.Model):
-    payment_id = models.CharField(max_length=255, primary_key=True)
     trader_id = models.ForeignKey( 'trader.Trader',on_delete=models.CASCADE)
     upcycler_id = models.ForeignKey('upcycler.Upcycler',on_delete=models.CASCADE)
     type = models.CharField(max_length=50)
