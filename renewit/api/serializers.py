@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from upcycler.models import Upcycler, UpcyclerClothesRequest, UpcycledProduct
+from upcycler.models import Upcycler, UpcyclerClothesRequest
 
 
 class UpcyclerSerializer(serializers.ModelSerializer):
@@ -12,10 +12,7 @@ class UpcyclerClothesRequestSerializer(serializers.ModelSerializer):
         model = UpcyclerClothesRequest
         fields = '__all__'
 
-class UpcycledProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UpcycledProduct
-        fields = '__all__'
+
 
 
 
