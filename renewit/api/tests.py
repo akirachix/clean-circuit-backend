@@ -1,18 +1,16 @@
-# from django.test import TestCase
+from django.test import TestCase
+from user_role.models import User
 
-# # Create your tests here.
-# from rest_framework.test import APITestCase
-# from django.urls import reverse
-# class VendorAPITest(APITestCase):
-#     def test_create_vendor(self):
-#         url = reverse('vendor-list')
-#         data = {
-#             "name": "Test Vendor",
-#             "phone_number": "123456789",
-#             "password_hash": "hash",
-#             "location": "Test Location",
-#             "shop_name": "Shop",
-#             "till_number": 123
-#         }
-#         response = self.client.post(url, data)
-#         self.assertEqual(response.status_code, 201)
+class UserModelTest(TestCase):
+    def test_create_user(self):
+        user = User.objects.create(
+            name='Test User',
+            email='testuser@example.com',
+            phone='1234567890',
+            role='trader',
+        )
+        self.assertEqual(User.objects.count(), 1)
+        self.assertEqual(user.name, 'Test User')
+        self.assertEqual(user.email, 'testuser@example.com')
+        self.assertEqual(user.phone, '1234567890')
+        self.assertEqual(user.role, 'trader')
