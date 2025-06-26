@@ -12,4 +12,4 @@ class PaymentDetails(models.Model):
 
 
     def __str__(self):
-        return f"PaymentDetails(payment_id={self.payment_id}, trader_id={self.trader_id}, upcycler_id={self.upcycler_id}, type={self.type}, quantity={self.quantity}, condition={self.condition}, listed_at={self.listed_at}, price={self.price})"
+        return f"PaymentDetails(trader_id={self.trader_id}, upcycler_id={self.upcycler_id}, type={self.type}, quantity={self.quantity}, condition={self.condition}, listed_at={self.listed_at}, price={self.price})"
