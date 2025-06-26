@@ -1,10 +1,10 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ( TraderViewSet,MaterialViewSet,
+from .views import ( UserViewSet,MaterialViewSet,
 )
 
 router = DefaultRouter()
-router.register(r'traders', TraderViewSet, basename="traders")
+router.register(r'user', UserViewSet, basename="user")
 router.register(r'materials', MaterialViewSet, basename="materials")
 
 

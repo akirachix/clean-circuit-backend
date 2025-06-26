@@ -1,11 +1,12 @@
-from trader.models import Trader, Material
+# from django import render
+from user_role.models import User, Material
 from rest_framework import viewsets
 from .serializers import (
-    TraderSerializer, MaterialSerializer,
+     MaterialSerializer, UserSerializer,
 )
-class TraderViewSet(viewsets.ModelViewSet):
-    queryset = Trader.objects.all()
-    serializer_class = TraderSerializer
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 class MaterialViewSet(viewsets.ModelViewSet):
     queryset = Material.objects.all()

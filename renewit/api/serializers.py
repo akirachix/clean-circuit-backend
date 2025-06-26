@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from trader.models import Trader, Material
+from user_role.models import User, Material
 
-class TraderSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Trader
-        fields = '__all__'
+        model = User
+        fields = ['id', 'name', 'email', 'phone', 'role', 'created_at']
 
 class MaterialSerializer(serializers.ModelSerializer):
     class Meta:
