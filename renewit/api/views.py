@@ -1,7 +1,7 @@
-from upcycler.models import Upcycler, UpcyclerClothesRequest, UpcycledProduct
+from upcycler.models import Upcycler, UpcyclerClothesRequest
 from rest_framework import viewsets
 from .serializers import (
-    UpcyclerSerializer, UpcyclerClothesRequestSerializer,
+    UpcyclerSerializer, UpcyclerClothesRequestSerializer
     
 )
 
