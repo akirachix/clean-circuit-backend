@@ -16,6 +16,7 @@ class User(models.Model):
     def __str__(self):
         return self.name
     
+    
 class UpcyclerClothesRequest(models.Model):
     request = models.AutoField(primary_key=True)
     upcycler = models.ForeignKey(User, on_delete=models.CASCADE)
