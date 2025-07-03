@@ -41,8 +41,8 @@ class MaterialCatalogue(models.Model):
             self.price_per_kg = self.MATERIAL_PRICES[self.material_type]
         super().save(*args, **kwargs)
 
-    def calculate_price(self, quantity):
+    # def calculate_price(self, quantity):
         
-        return self.price_per_kg * quantity
+    #     return self.price_per_kg * quantity
 
 
