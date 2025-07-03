@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from catalogue.models import MaterialCatalogue
 from rest_framework import viewsets, status
 from .serializers import MaterialCatalogueSerializer
@@ -31,3 +32,20 @@ def create(self, request, *args, **kwargs):
     
   
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+=======
+from user_role.models import User, UpcyclerClothesRequest
+from rest_framework import viewsets
+from .serializers import (
+     UserSerializer, UpcyclerClothesRequestSerializer
+    
+)
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UpcyclerClothesRequestViewSet(viewsets.ModelViewSet):
+    queryset = UpcyclerClothesRequest.objects.all()
+    serializer_class = UpcyclerClothesRequestSerializer
+
+>>>>>>> 4722806222f7690e4608f673b166fe14b3397831

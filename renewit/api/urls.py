@@ -6,6 +6,16 @@ from .views import MaterialCatalogueViewSet
 router = DefaultRouter()
 router.register(r'catalogue',MaterialCatalogueViewSet, basename='catalogue')
 
+from .views import ( UserViewSet, UpcyclerClothesRequestViewSet,
+)
+
+router = DefaultRouter()
+router.register(r'user', UserViewSet, basename="user")
+router.register(r'clothes-requests', UpcyclerClothesRequestViewSet, basename="clothes-requests")
+
+
+
+
 urlpatterns = [
     path("", include(router.urls)),
 ]
