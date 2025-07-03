@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class TraderConfig(AppConfig):
+class UserRoleConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'trader'
+    name = 'user_role'
