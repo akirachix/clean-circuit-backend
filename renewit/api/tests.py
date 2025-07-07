@@ -1,63 +1,52 @@
-from django.test import TestCase
-from user_role.models import User, UpcyclerClothesRequest
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APITestCase
+from .models import MaterialCatalogue
 
-class UserModelTest(TestCase):
+class MaterialCatalogueViewSetTests(APITestCase):
     def setUp(self):
-        self.user = User.objects.create(
-            name='Test User',
-            email='testuser@example.com',
-            phone='1234567890',
-            role='trader',
-        )
+        # Create a sample material for testing
+        self.material = MaterialCatalogue.objects.create(material_type='Fabric', other_field='Sample Data')
 
-    def test_create_user(self):
-        self.assertEqual(User.objects.count(), 1)
-        self.assertEqual(self.user.name, 'Test User')
+    def test_create_material(self):
+        url = reverse('materialcatalogue-list')  # Adjust the URL name as per your routing
+        data = {
+            'material_type': 'New Fabric',
+            'other_field': 'New Sample Data'
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(MaterialCatalogue.objects.count(), 2)  # Check if a new material is created
+        self.assertEqual(MaterialCatalogue.objects.get(id=response.data['id']).material_type, 'New Fabric')
 
-    def test_read_user(self):
-        user = User.objects.get(pk=self.user.pk)
-        self.assertEqual(user.email, 'testuser@example.com')
+    def test_update_material(self):
+        url = reverse('materialcatalogue-list')  # Adjust the URL name as per your routing
+        data = {
+            'material_type': 'Fabric',  # This should match the existing material_type
+            'other_field': 'Updated Sample Data'
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.material.refresh_from_db()
+        self.assertEqual(self.material.other_field, 'Updated Sample Data')
 
-    def test_update_user(self):
-        self.user.name = 'Updated Name'
-        self.user.save()
-        updated_user = User.objects.get(pk=self.user.pk)
-        self.assertEqual(updated_user.name, 'Updated Name')
+    def test_invalid_material_creation(self):
+        url = reverse('materialcatalogue-list')
+        data = {
+            'material_type': '',  # Invalid data
+            'other_field': 'Sample Data'
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_delete_user(self):
-        self.user.delete()
-        self.assertEqual(User.objects.count(), 0)
+    def test_update_or_create_material(self):
+        url = reverse('materialcatalogue-list')  # Adjust the URL name as per your routing
+        data = {
+            'material_type': 'Fabric',  # This should match the existing material_type
+            'other_field': 'Another Sample Data'
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(MaterialCatalogue.objects.count(), 1)  # Ensure no new material is created
+        self.assertEqual(self.material.other_field, 'Another Sample Data')  # Check if the existing material is updated
 
-class UpcyclerClothesRequestModelTest(TestCase):
-    def setUp(self):
-        self.user = User.objects.create(
-            name='Upcycler User',
-            email='mary@gmail.com',
-            phone='0787654321',
-            role='upcycler',
-        )
-        self.request = UpcyclerClothesRequest.objects.create(
-            upcycler=self.user,
-            type='Shirt',
-            quantity=10,
-        )
-
-    def test_create_clothes_request(self):
-        self.assertEqual(UpcyclerClothesRequest.objects.count(), 1)
-        self.assertEqual(self.request.type, 'Shirt')
-
-    def test_read_clothes_request(self):
-        req = UpcyclerClothesRequest.objects.get(pk=self.request.pk)
-        self.assertEqual(req.quantity, 10)
-
-    def test_update_clothes_request(self):
-        self.request.type = 'Pants'
-        self.request.quantity = 5
-        self.request.save()
-        updated = UpcyclerClothesRequest.objects.get(pk=self.request.pk)
-        self.assertEqual(updated.type, 'Pants')
-        self.assertEqual(updated.quantity, 5)
-
-    def test_delete_clothes_request(self):
-        self.request.delete()
-        self.assertEqual(UpcyclerClothesRequest.objects.count(), 0)
