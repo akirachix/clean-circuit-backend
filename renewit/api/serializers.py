@@ -1,12 +1,7 @@
 from rest_framework import serializers
-from user_role.models import UpcycledProduct
-from user_role.models import User
+from upcycledproducts.models import UpcycledProduct
+
 class UpcycledProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model=UpcycledProduct
+        model = UpcycledProduct
         fields = '__all__'
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=User
-        fields='__all__'

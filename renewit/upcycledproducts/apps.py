@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class UserRoleConfig(AppConfig):
+class UpcycledproductsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'user_role'
+    name = 'upcycledproducts'
