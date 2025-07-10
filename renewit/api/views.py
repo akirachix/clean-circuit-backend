@@ -1,12 +1,8 @@
 # from django import render
-from user_role.models import User, Material
+from Material.models import  Material
 from rest_framework import viewsets
-from .serializers import (
-     MaterialSerializer, UserSerializer,
-)
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+from .serializers import MaterialSerializer
+
 
 class MaterialViewSet(viewsets.ModelViewSet):
     queryset = Material.objects.all()
