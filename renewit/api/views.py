@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from upcycledproducts.models import UpcycledProduct
 from .serializers import UpcycledProductSerializer
-from catalogue.models import MaterialCatalogue
 
+from catalogue.models import MaterialCatalogue
+from rest_framework import viewsets, status
 from .serializers import MaterialCatalogueSerializer
 from rest_framework.response import Response
 
@@ -11,11 +12,10 @@ class UpcycledProductViewSet(viewsets.ModelViewSet):
     queryset=UpcycledProduct.objects.all()
     serializer_class= UpcycledProductSerializer
 
-
-
 class MaterialCatalogueViewSet(viewsets.ModelViewSet):
     queryset = MaterialCatalogue.objects.all()
     serializer_class = MaterialCatalogueSerializer
+    
     
 def create(self, request, *args, **kwargs):
     serializer = self.get_serializer(data=request.data)
@@ -41,3 +41,4 @@ def create(self, request, *args, **kwargs):
     
   
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
