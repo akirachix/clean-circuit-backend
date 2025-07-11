@@ -1,5 +1,10 @@
 
 from django.test import TestCase
+
+
+# Create your tests here.
+
+
 from Material.models import Material
 from django.utils import timezone
 
@@ -29,7 +34,8 @@ class MaterialModelTest(TestCase):
 
 
     
-=======
+
+
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -82,4 +88,3 @@ class MaterialCatalogueViewSetTests(APITestCase):
         self.assertEqual(MaterialCatalogue.objects.count(), 1)  # Ensure no new material is created
         self.assertEqual(self.material.other_field, 'Another Sample Data')  # Check if the existing material is updated
 
->>>>>>> d9462d9ed5966ecebc715070f6c4099dcd90189b

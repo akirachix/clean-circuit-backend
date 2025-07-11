@@ -40,12 +40,11 @@ INSTALLED_APPS = [
 
     'Material',
     'api',
-
+    'upcycledproducts',
+    'api',
     'catalogue',
-
     'rest_framework',
-     
-     'user_role',
+     'api',
 
     
 ]

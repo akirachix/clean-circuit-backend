@@ -1,6 +1,11 @@
 from rest_framework import serializers
 
+from upcycledproducts.models import UpcycledProduct
+from user_role.models import UpcyclerClothesRequest
+
+
 from Material.models import Material
+
 
 
 from catalogue.models import MaterialCatalogue
@@ -17,16 +22,12 @@ class MaterialCatalogueSerializer(serializers.ModelSerializer):
         model=MaterialCatalogue
         fields='__all__'
 
-from user_role.models import User, UpcyclerClothesRequest
-
-
-class UserSerializer(serializers.ModelSerializer):
+class UpcycledProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+
+        model = UpcycledProduct
         fields = '__all__'
 
-class UpcyclerClothesRequestSerializer(serializers.ModelSerializer):
-    class Meta:
         model = UpcyclerClothesRequest
         fields = '__all__'
 
