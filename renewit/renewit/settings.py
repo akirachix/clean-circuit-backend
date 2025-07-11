@@ -39,7 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'upcycledproducts',
     'api',
+    'catalogue',
     'rest_framework',
+    'user_role',
+    
+
+    
 ]
 
 MIDDLEWARE = [
