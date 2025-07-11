@@ -1,4 +1,15 @@
 
+# from django import render
+from Material.models import  Material
+from rest_framework import viewsets
+from .serializers import MaterialSerializer
+
+
+class MaterialViewSet(viewsets.ModelViewSet):
+    queryset = Material.objects.all()
+    serializer_class = MaterialSerializer
+
+
 from catalogue.models import MaterialCatalogue
 from rest_framework import viewsets, status
 from .serializers import MaterialCatalogueSerializer
@@ -32,3 +43,4 @@ def create(self, request, *args, **kwargs):
     
   
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

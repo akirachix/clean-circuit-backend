@@ -1,3 +1,35 @@
+
+from django.test import TestCase
+from Material.models import Material
+from django.utils import timezone
+
+class MaterialModelTest(TestCase):
+    def test_create_material(self):
+        material = Material.objects.create(
+            type='cotton',
+            quantity=7,
+            image='null',  
+            condition='high',
+            listed_at=timezone.now()  
+        )
+        self.assertEqual(Material.objects.count(), 1)
+        self.assertEqual(material.type, 'cotton')
+        self.assertEqual(material.quantity, 7)
+        self.assertEqual(material.condition, 'high')
+       
+
+
+
+
+
+
+
+
+
+
+
+    
+=======
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -50,3 +82,4 @@ class MaterialCatalogueViewSetTests(APITestCase):
         self.assertEqual(MaterialCatalogue.objects.count(), 1)  # Ensure no new material is created
         self.assertEqual(self.material.other_field, 'Another Sample Data')  # Check if the existing material is updated
 
+>>>>>>> d9462d9ed5966ecebc715070f6c4099dcd90189b
