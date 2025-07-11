@@ -3,6 +3,17 @@ from rest_framework import viewsets
 from upcycledproducts.models import UpcycledProduct
 from .serializers import UpcycledProductSerializer
 
+# from django import render
+from Material.models import  Material
+from rest_framework import viewsets
+from .serializers import MaterialSerializer
+
+
+class MaterialViewSet(viewsets.ModelViewSet):
+    queryset = Material.objects.all()
+    serializer_class = MaterialSerializer
+
+
 from catalogue.models import MaterialCatalogue
 from rest_framework import viewsets, status
 from .serializers import MaterialCatalogueSerializer
