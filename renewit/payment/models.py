@@ -2,8 +2,6 @@ from django.db import models
 
 # Create your models here.
 class PaymentDetails(models.Model):
-    trader_id = models.ForeignKey( 'trader.Trader',on_delete=models.CASCADE)
-    upcycler_id = models.ForeignKey('upcycler.Upcycler',on_delete=models.CASCADE)
     type = models.CharField(max_length=50)
     quantity = models.IntegerField()
     condition = models.CharField(max_length=50)
@@ -12,4 +10,4 @@ class PaymentDetails(models.Model):
 
 
     def __str__(self):
-        return f"PaymentDetails(trader_id={self.trader_id}, upcycler_id={self.upcycler_id}, type={self.type}, quantity={self.quantity}, condition={self.condition}, listed_at={self.listed_at}, price={self.price})"
+        return f"PaymentDetails( type={self.type}, quantity={self.quantity}, condition={self.condition}, listed_at={self.listed_at}, price={self.price})"
