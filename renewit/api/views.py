@@ -1,9 +1,15 @@
+
+
+from payment.models import PaymentDetails
+from rest_framework import viewsets
+from .serializers import ( PaymentSerializer)
+
 from django.shortcuts import render
 from rest_framework import viewsets
 from upcycledproducts.models import UpcycledProduct
 from .serializers import UpcycledProductSerializer
 
-# from django import render
+
 from Material.models import  Material
 from rest_framework import viewsets
 from .serializers import MaterialSerializer
@@ -53,3 +59,8 @@ def create(self, request, *args, **kwargs):
   
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class PaymentViewSet(viewsets.ModelViewSet):
+    queryset = PaymentDetails.objects.all()
+    serializer_class = PaymentSerializer
+    
