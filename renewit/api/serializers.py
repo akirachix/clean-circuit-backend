@@ -1,16 +1,9 @@
 from rest_framework import serializers
-
-from catalogue.models import MaterialCatalogue
-
-
-
-class MaterialCatalogueSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=MaterialCatalogue
-        fields='__all__'
-
 from user_role.models import User, UpcyclerClothesRequest
-
+from payment.models import PaymentDetails
+from upcycledproducts.models import UpcycledProduct
+from Material.models import Material
+from catalogue.models import MaterialCatalogue
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,8 +15,22 @@ class UpcyclerClothesRequestSerializer(serializers.ModelSerializer):
         model = UpcyclerClothesRequest
         fields = '__all__'
 
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PaymentDetails
+        fields = '__all__'
 
+class UpcycledProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UpcycledProduct
+        fields = '__all__'
 
+class MaterialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Material
+        fields = '__all__'
 
-
-
+class MaterialCatalogueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MaterialCatalogue
+        fields = '__all__'
