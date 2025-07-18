@@ -1,14 +1,4 @@
-
-
-
-
-
 from django.test import TestCase
-
-
-# Create your tests here.
-
-
 from Material.models import Material
 from django.utils import timezone
 

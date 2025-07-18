@@ -5,7 +5,6 @@ from .views import (
     PaymentViewSet, UpcycledProductViewSet,
     MaterialViewSet, MaterialCatalogueViewSet
 )
-
 router = DefaultRouter()
 
 router.register(r'users', UserViewSet, basename='users')

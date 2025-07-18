@@ -14,7 +14,6 @@ class MaterialCatalogue(models.Model):
         ('wool','Wool'),
     ]
 
-    
     MATERIAL_PRICES = {
         'cotton':2000.00,  
         'denim': 1000.00,   
@@ -44,5 +43,4 @@ class MaterialCatalogue(models.Model):
     def calculate_price(self, quantity):
         
         return self.price_per_kg * quantity
-
 

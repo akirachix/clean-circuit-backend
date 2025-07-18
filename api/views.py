@@ -1,8 +1,6 @@
 from rest_framework import viewsets
-from .serializers import (
-    UserSerializer, UpcyclerClothesRequestSerializer, PaymentSerializer,
-    UpcycledProductSerializer, MaterialSerializer, MaterialCatalogueSerializer
-)
+from .serializers import ( UserSerializer, UpcyclerClothesRequestSerializer, PaymentSerializer,
+                          UpcycledProductSerializer, MaterialSerializer, MaterialCatalogueSerializer)
 from user_role.models import User, UpcyclerClothesRequest
 from payment.models import PaymentDetails
 from upcycledproducts.models import UpcycledProduct

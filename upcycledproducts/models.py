@@ -1,6 +1,6 @@
 from django.db import models
 from user_role.models import User
-
+# Register your models here.
 class UpcycledProduct(models.Model):
     upcycled_clothes = models.CharField(max_length=50, unique=True)  
     image = models.ImageField(upload_to='upcycled_clothes_images/', null=True, blank=True)

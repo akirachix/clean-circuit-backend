@@ -1,6 +1,7 @@
 from django.db import models
 from user_role.models import User
 
+
 class PaymentDetails(models.Model):
     type = models.CharField(max_length=50)
     quantity = models.IntegerField()

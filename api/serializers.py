@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from user_role.models import User, UpcyclerClothesRequest
+from user_role.models import (User, UpcyclerClothesRequest)
 from payment.models import PaymentDetails
 from upcycledproducts.models import UpcycledProduct
 from Material.models import Material

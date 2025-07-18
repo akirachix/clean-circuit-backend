@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from user_role.models import User
+# Create your tests here.
 
 class Material(models.Model):
     material = models.AutoField(primary_key=True)
