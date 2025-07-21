@@ -24,10 +24,6 @@ from datetime import datetime
 from .daraja import DarajaAPI
 from rest_framework.decorators import api_view
 
-
-
-
-
 class AppUserViewSet(viewsets.ModelViewSet):
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
