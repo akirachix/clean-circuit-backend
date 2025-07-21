@@ -1,3 +1,13 @@
+
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+# import dj_database_url
+
+
+
+
+
 """
 Django settings for renewit project.
 
@@ -9,9 +19,6 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-import os
-from dotenv import load_dotenv
-load_dotenv()
 
 from pathlib import Path
 
@@ -23,15 +30,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'django-insecure-38vf$@s$+cl1ts=v3#6qzztd^!o(nq0mb3#+wu2qwe0icb(ozx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Application definition
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,18 +46,36 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'payment',
     'rest_framework',
     'api',
+    'payment',
+    'user_role',
     'Material',
     'upcycledproducts',
     'catalogue',
-    'user_role',
-    
-
-    
-
+    'rest_framework.authtoken'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+       
+    ],
+}
+
+
+
+
+DARAJA_CONSUMER_KEY='hN2IrgRMs7XJeO2N6sAPfL5Wh3wJQRIRCKygQ7oaij8eSvbq'
+DARAJA_CONSUMER_SECRET='uEc6A9LriCOtiIqJejUrsSblKGgkFa3IQjtmaOFQvNCAo5l7c8gTuhSCds5a9LaW'
+DARAJA_SHORTCODE =174379
+DARAJA_PASSKEY='bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
+DARAJA_CALLBACK_URL='https://mydomain.com/path/api/daraja/stk-push/mpesa-callback/'
+
 
 
 MIDDLEWARE = [
@@ -61,7 +86,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'renewit.urls'
@@ -94,6 +118,17 @@ DATABASES = {
     }
 }
 
+
+# DATABASES = {
+#    "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
+# }
+# if not os.getenv("DATABASE_URL"):
+#    DATABASES = {
+#        "default": {
+#            "ENGINE": "django.db.backends.sqlite3",
+#            "NAME": BASE_DIR / "db.sqlite3",
+#        }
+#    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -129,15 +164,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
