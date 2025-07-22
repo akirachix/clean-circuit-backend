@@ -144,6 +144,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+DARAJA_CONSUMER_KEY = os.getenv('DARAJA_CONSUMER_KEY')
+DARAJA_CONSUMER_SECRET = os.getenv('DARAJA_CONSUMER_SECRET')
+DARAJA_SHORTCODE = os.getenv('DARAJA_SHORTCODE')
+DARAJA_PASSKEY = os.getenv('DARAJA_PASSKEY')
+DARAJA_CALLBACK_URL = os.getenv('DARAJA_CALLBACK_URL')
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
