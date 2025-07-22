@@ -11,7 +11,6 @@ class User(models.Model):
         ('upcycler', 'Upcycler'),
     ]
     name = models.CharField(max_length=50)
-    # email = models.EmailField(max_length=50, unique=True)
     email = models.EmailField(max_length=50, unique=True, null=False, blank=False)
 
     phone = models.CharField(max_length=50)

@@ -2,11 +2,14 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-# import dj_database_url
-
-
-
-
+from pathlib import Path
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+import dj_database_url
+BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 """
 Django settings for renewit project.
@@ -70,13 +73,6 @@ REST_FRAMEWORK = {
 
 
 
-DARAJA_CONSUMER_KEY='hN2IrgRMs7XJeO2N6sAPfL5Wh3wJQRIRCKygQ7oaij8eSvbq'
-DARAJA_CONSUMER_SECRET='uEc6A9LriCOtiIqJejUrsSblKGgkFa3IQjtmaOFQvNCAo5l7c8gTuhSCds5a9LaW'
-DARAJA_SHORTCODE =174379
-DARAJA_PASSKEY='bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
-DARAJA_CALLBACK_URL='https://mydomain.com/path/api/daraja/stk-push/mpesa-callback/'
-
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -119,16 +115,16 @@ DATABASES = {
 }
 
 
-# DATABASES = {
-#    "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
-# }
-# if not os.getenv("DATABASE_URL"):
-#    DATABASES = {
-#        "default": {
-#            "ENGINE": "django.db.backends.sqlite3",
-#            "NAME": BASE_DIR / "db.sqlite3",
-#        }
-#    }
+DATABASES = {
+   "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
+}
+if not os.getenv("DATABASE_URL"):
+   DATABASES = {
+       "default": {
+           "ENGINE": "django.db.backends.sqlite3",
+           "NAME": BASE_DIR / "db.sqlite3",
+       }
+   }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
