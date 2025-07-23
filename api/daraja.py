@@ -3,6 +3,7 @@ from django.conf import settings
 from requests.auth import HTTPBasicAuth
 import base64
 import datetime
+from rest_framework.exceptions import APIException
 
 class DarajaAPI:
     def __init__(self):
@@ -13,11 +14,23 @@ class DarajaAPI:
         self.base_url = "https://sandbox.safaricom.co.ke"
         self.callback_url = settings.DARAJA_CALLBACK_URL
 
-
-    def get_access_token(self):
-        url = f"{self.base_url}/oauth/v1/generate?grant_type=client_credentials"
+def get_access_token(self):
+    url = f"{self.base_url}/oauth/v1/generate?grant_type=client_credentials"
+    try:
         response = requests.get(url, auth=HTTPBasicAuth(self.consumer_key, self.consumer_secret))
-        return response.json()['access_token']
+        # Check if the response status is successful
+        if response.status_code == 200:
+            try:
+                return response.json()['access_token']  # This return is correctly inside the function
+            except (ValueError, KeyError) as e:
+                raise APIException(f"Failed to parse access token: {str(e)}. Response: {response.text}")
+        else:
+            raise APIException(
+                f"Failed to get access token. Status: {response.status_code}, Response: {response.text}"
+            )
+    except requests.RequestException as e:
+        raise APIException(f"Error connecting to Daraja API: {str(e)}")
+    
 
     def stk_push(self, phone_number, amount, account_reference, transaction_desc):
         access_token = self.get_access_token()
