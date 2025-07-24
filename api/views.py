@@ -16,13 +16,14 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-import logging
 from datetime import datetime
 from .daraja import DarajaAPI
 from rest_framework.decorators import api_view
 from django.utils import timezone
-
+from django.db.models import Q
+from rest_framework import serializers
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.exceptions import APIException
 
 
 class AppUserViewSet(viewsets.ModelViewSet):
@@ -44,28 +45,33 @@ class UpcyclerClothesRequestViewSet(viewsets.ModelViewSet):
         app_user = AppUser.objects.get(user=self.request.user)
         serializer.save(upcycler=app_user)
 
-
 class PaymentViewSet(viewsets.ModelViewSet):
-    queryset = PaymentDetails.objects.all()
+    queryset = PaymentDetails.objects.none()
     serializer_class = PaymentDetailsSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            app_user = AppUser.objects.get(user=self.request.user)
-            return PaymentDetails.objects.filter(
-                models.Q(trader=app_user) | models.Q(upcycler=app_user)
-            )
+            try:
+                app_user = AppUser.objects.get(user=self.request.user)
+                return PaymentDetails.objects.filter(
+                    Q(trader=app_user) | Q(upcycler=app_user)
+                )
+            except AppUser.DoesNotExist:
+                return PaymentDetails.objects.none()
         return PaymentDetails.objects.none()
 
     def perform_create(self, serializer):
-        app_user = AppUser.objects.get(user=self.request.user)
-        if app_user.role == 'trader':
-            serializer.save(trader=app_user)
-        elif app_user.role == 'upcycler':
-            serializer.save(upcycler=app_user)
-        else:
-            raise serializers.ValidationError("Invalid role for payment creation.")
+        try:
+            app_user = AppUser.objects.get(user=self.request.user)
+            if app_user.role == 'trader':
+                serializer.save(trader=app_user)
+            elif app_user.role == 'upcycler':
+                serializer.save(upcycler=app_user)
+            else:
+                raise serializers.ValidationError("Invalid role for payment creation.")
+        except AppUser.DoesNotExist:
+            raise serializers.ValidationError("User profile does not exist.")
 
 
 class MaterialCatalogueViewSet(viewsets.ModelViewSet):
@@ -120,46 +126,61 @@ class STKPushView(APIView):
     def post(self, request):
         serializer = STKPushSerializer(data=request.data)
         if serializer.is_valid():
-            data = serializer.validated_data
-            daraja = DarajaAPI()
-            response = daraja.stk_push(
-                phone_number=data['phone_number'],
-                amount=data['amount'],
-                account_reference=data['account_reference'],
-                transaction_desc=data['transaction_desc']
-            )
-
-            checkout_request_id = response.get('CheckoutRequestID', None)
-            
-            user = None
-            if request.user.is_authenticated:
-                user = AppUser.objects.get(user=request.user)
-            
-            if checkout_request_id:
-                
-                payment = PaymentDetails.objects.create(
+            try:
+                data = serializer.validated_data
+                daraja = DarajaAPI()
+                response = daraja.stk_push(
                     phone_number=data['phone_number'],
                     amount=data['amount'],
                     account_reference=data['account_reference'],
-                    transaction_desc=data['transaction_desc'],
-                    mpesa_checkout_id=checkout_request_id,
-                    quantity= 1,
-                    type = 'payment',
-                    condition='New',
-                    price=data['amount'],
+                    transaction_desc=data['transaction_desc']
                 )
-                if user:
-                    if user.role == 'trader':
-                        payment.trader = user
-                    elif user.role == 'upcycler':
-                        payment.upcycler = user
-                    payment.save()
 
-            return Response(response)
+                checkout_request_id = response.get('CheckoutRequestID', None)
+                
+                user = None
+                if request.user.is_authenticated:
+                    try:
+                        user = AppUser.objects.get(user=request.user)
+                    except ObjectDoesNotExist:
+                        return Response(
+                            {"error": "Authenticated user not found in AppUser"},
+                            status=status.HTTP_400_BAD_REQUEST
+                        )
+                
+                if checkout_request_id:
+                    payment = PaymentDetails.objects.create(
+                        phone_number=data['phone_number'],
+                        amount=data['amount'],
+                        account_reference=data['account_reference'],
+                        transaction_desc=data['transaction_desc'],
+                        mpesa_checkout_id=checkout_request_id,
+                        quantity=1,
+                        type='payment',
+                        condition='New',
+                        price=data['amount'],
+                    )
+                    if user:
+                        if user.role == 'trader':
+                            payment.trader = user
+                        elif user.role == 'upcycler':
+                            payment.upcycler = user
+                        payment.save()
+
+                return Response(response, status=status.HTTP_200_OK)
+            
+            except APIException as e:
+                return Response(
+                    {"error": str(e)},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            except Exception as e:
+                return Response(
+                    {"error": f"Unexpected error: {str(e)}"},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegistrationSerializer
