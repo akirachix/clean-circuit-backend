@@ -3,15 +3,11 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from pathlib import Path
-import dj_database_url
+import dj_database_url;
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = os.getenv('SECRET_KEY')
-from corsheaders.defaults import default_headers
-
-CORS_ALLOW_HEADERS = list(default_headers) + [
-    'authorization',
-]
 
 
 
@@ -33,7 +29,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
+# Quick-start development settings - unsuitabl VVvvC e for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -75,7 +71,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-import logging
 
 LOGGING = {
     'version': 1,
@@ -128,10 +123,6 @@ TEMPLATES = [
     },
 ]
 
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^http://localhost:\d+$",  
-]
-
 CORS_ALLOW_ALL_ORIGINS = True
 
 
@@ -141,8 +132,6 @@ WSGI_APPLICATION = 'renewit.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-
 
 
 DATABASES = {
