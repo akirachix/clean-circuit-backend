@@ -132,6 +132,8 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^http://localhost:\d+$",  
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 
 WSGI_APPLICATION = 'renewit.wsgi.application'
