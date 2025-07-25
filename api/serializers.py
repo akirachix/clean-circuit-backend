@@ -8,7 +8,9 @@ from catalogue.models import MaterialCatalogue
 
 
 class DjangoUserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True) 
     password = serializers.CharField(write_only=True)
+
     class Meta:
         model = DjangoUser
         fields = ['id', 'username', 'email', 'password']
@@ -16,23 +18,30 @@ class DjangoUserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return DjangoUser.objects.create_user(
             username=validated_data['username'],
-            email=validated_data.get('email', ''),
+            email=validated_data['email'],
             password=validated_data['password']
         )
-    
+
 
 class RegistrationSerializer(serializers.ModelSerializer):
-    user = DjangoUserSerializer() 
+    user = DjangoUserSerializer()
 
     class Meta:
-        model = User  
-        fields = ['user', 'name', 'phone', 'role']  
+        model = User
+        fields = ['user', 'name', 'phone', 'role']
+
+    def validate(self, attrs):
+        user_data = attrs.get('user')
+        user_serializer = DjangoUserSerializer(data=user_data)
+        user_serializer.is_valid(raise_exception=True) 
+        return super().validate(attrs)
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
         django_user = DjangoUserSerializer().create(user_data)
         profile_user = User.objects.create(user=django_user, **validated_data)
         return profile_user
+
 
 class AppUserSerializer(serializers.ModelSerializer):
     user = DjangoUserSerializer()
@@ -41,13 +50,10 @@ class AppUserSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'name','phone', 'role']
 
     def create(self, validated_data):
-        user_data = validated_data.pop("user")
-        django_user = DjangoUser.objects.create_user(
-            username=user_data["username"],
-            email=user_data.get("email", ""),
-            password=user_data["password"]
-        )
+        user_data = validated_data.pop('user')
+        django_user = DjangoUserSerializer().create(user_data)
         return User.objects.create(user=django_user, **validated_data)
+
 
     def update(self, instance, validated_data):
         user_data = validated_data.pop("user", None)
