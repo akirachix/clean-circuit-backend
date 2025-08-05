@@ -82,22 +82,7 @@ class MaterialCatalogueViewSet(viewsets.ModelViewSet):
 class MaterialViewSet(viewsets.ModelViewSet):
     queryset = Material.objects.all()
     serializer_class = MaterialSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        if self.request.user.is_authenticated:
-            app_user = AppUser.objects.get(user=self.request.user)
-            if app_user.role == 'trader':
-                return Material.objects.filter(trader=app_user)
-        return Material.objects.none()
-
-    def perform_create(self, serializer):
-        app_user = AppUser.objects.get(user=self.request.user)
-        if app_user.role == 'trader':
-            serializer.save(trader=app_user)
-        else:
-            raise serializers.ValidationError("Only traders can list materials.")
-
+    permission_classes = []
 
 class UpcycledProductViewSet(viewsets.ModelViewSet):
     queryset = UpcycledProduct.objects.all()
